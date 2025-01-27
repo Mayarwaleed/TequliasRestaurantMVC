@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<TequliasRestaurant.Models.Order>
 @{
-        ViewData["Title"] = "My Orders";
+    ViewData["Title"] = "My Orders";
 }
-<table class="table table-bordered">
-    <thead>
+
+<h1 class="text-center my-4">My Orders</h1>
+
+<table class="table table-hover table-bordered shadow-sm">
+    <thead class="table-dark">
         <tr>
             <th>Order ID</th>
             <th>Order Date</th>
@@ -19,14 +22,47 @@
                 <td>@order.OrderDate.ToString("MM/dd/yyyy")</td>
                 <td>@order.TotalAmount.ToString("C")</td>
                 <td>
-                    <ul>
-                        @foreach (var item in order.OrderItems)
-                        {
-                            <li>@item.Product.Name - @item.Quantity x @item.Price.ToString("C")</li>
-                        }
-                    </ul>
+                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#order-items-@order.OrderId" aria-expanded="false" aria-controls="order-items-@order.OrderId">
+                        View Items
+                    </button>
+                    <div class="collapse mt-2" id="order-items-@order.OrderId">
+                        <ul class="list-group">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@item.Product.Name</span>
+                                    <span>@item.Quantity x @item.Price.ToString("C")</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<style>
+    h1 {
+        font-family: 'Roboto', sans-serif;
+        color: #4a4a4a;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .list-group-item {
+        font-size: 0.9rem;
+    }
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
